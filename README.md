@@ -22,3 +22,8 @@ This repo provide a light Docker environment for Magento 2 using Nginx, Php7.2 a
 - add in your **/etc/hosts** file `127.0.0.1 magento2.local`
 - open your browser and go to [magento2.local](http://magento2.local/setup)
 - Follow the step to install magento2
+
+### load sample data
+- `docker-compose exec php-fpm php -dmemory_limit=6G bin/magento sampledata:deploy`
+- `docker run --rm --interactive --tty --volume ${PWD}/php/src:/app --user $(id -u):$(id -g) composer update --ignore-platform-reqs`
+- `docker-compose exec php-fpm php bin/magento setup:upgrade`
