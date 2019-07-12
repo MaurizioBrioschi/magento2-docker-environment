@@ -1,0 +1,28 @@
+version: "3.7"
+
+services:
+  nginx:
+    build:
+      context: nginx
+    ports:
+      - 80:80
+    volumes:
+      - ${PWD}/php/src:/var/www/html/magento2
+
+  db:
+    build:
+      context: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: magento2
+      MYSQL_USER: magento2
+      MYSQL_PASSWORD: userpwd
+    ports:
+      - 6666:3306
+
+  php-fpm:
+    user: 1000:1000
+    build:
+      context: php
+    volumes:
+      - ${PWD}/php/src:/var/www/html/magento2
