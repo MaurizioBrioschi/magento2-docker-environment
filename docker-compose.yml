@@ -18,11 +18,22 @@ services:
       MYSQL_USER: magento2
       MYSQL_PASSWORD: userpwd
     ports:
-      - 6666:3306
+      - 3306:3306
 
   php-fpm:
-    user: 1000:1000
+    user: ${UID}:${GID}
     build:
       context: php
     volumes:
-      - ${PWD}/php/src:/var/www/html/magento2
+      - ${PWD}/php/src:/var/www/html/magento2:delegated
+
+  redis:
+    image: redis:5.0.5-alpine3.10
+
+#volumes:
+#  nfsmount:
+#    driver: local
+#    driver_opts:
+#      type: nfs
+#      o: addr=host.docker.internal,rw,nolock,hard,nointr,nfsvers=3,async
+#      device: :${PWD}/php/src
